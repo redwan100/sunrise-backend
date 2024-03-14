@@ -1,14 +1,31 @@
 import cors from "cors";
-import express, { Application, Request, Response } from "express";
+import express, { Application, NextFunction, Request, Response } from "express";
 import morgan from "morgan";
-export const app: Application = express();
+import globalErrorHandler from "./app/middleware/globalErrorHandler";
+import notFound from "./app/middleware/notFound";
+import router from "./app/routes";
+const app: Application = express();
 
 //! parser
 app.use(express.json());
 app.use(cors());
 app.use(morgan("dev"));
 
-app.get("/", (req: Request, res: Response) => {
-  res.send("Hello sunrise agency");
+app.get("/", (req: Request, res: Response, next: NextFunction) => {
+  try {
+    res.send("Hello sunrise agency");
+  } catch (error) {
+    next(error);
+  }
 });
 
+// ! router
+app.use("/api/v1/", router);
+
+// * not found route handler
+app.all("*", notFound);
+
+// ! global error handler
+app.use(globalErrorHandler);
+
+export default app;
