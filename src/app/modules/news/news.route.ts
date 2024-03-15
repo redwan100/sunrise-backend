@@ -7,7 +7,7 @@ import { NewsValidations } from "./news.validation";
 const router = express.Router();
 
 router.post(
-  "/create-news",
+  "/",
 
   upload.single("image"),
   (req: Request, res: Response, next: NextFunction) => {
@@ -17,5 +17,7 @@ router.post(
   validRequest(NewsValidations.NewsValidationSchema),
   NewsController.createPost,
 );
+
+router.get("/", NewsController.getAllNews);
 
 export const NewsRouter = router;

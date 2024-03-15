@@ -2,7 +2,7 @@ import sendImageToCloudinary from "../../utils/sendImageToCloudinary";
 import News from "./news.model";
 import { TNews } from "./news.types";
 
-const createNewsIntoDB = async (payload: TNews, file: Record<string, any>) => {
+const createNewsIntoDB = async (payload: TNews, file: any) => {
   const imageName = payload.title;
   const { secure_url } = await sendImageToCloudinary(imageName, file?.path);
   payload.image = secure_url;
@@ -12,6 +12,12 @@ const createNewsIntoDB = async (payload: TNews, file: Record<string, any>) => {
   return result;
 };
 
+const getAllNewsFromDB = async () => {
+  const result = await News.find();
+  return result;
+};
+
 export const NewsServices = {
   createNewsIntoDB,
+  getAllNewsFromDB,
 };

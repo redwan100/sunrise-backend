@@ -1,25 +1,34 @@
-import { NextFunction, Request, Response } from "express";
-import { NewsServices } from "./news.service";
-import sendResponse from "../../utils/sendResponse";
 import httpStatus from "http-status";
+import catchAsync from "../../utils/catchAsync";
+import sendResponse from "../../utils/sendResponse";
+import { NewsServices } from "./news.service";
 
-const createPost = async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const data = req.body;
-    const file = req?.file;
-    const result = await NewsServices.createNewsIntoDB(data, file);
+const createPost = catchAsync(async (req, res, next) => {
+  const data = req.body;
+  const result = await NewsServices.createNewsIntoDB(data, req?.file);
 
-    sendResponse(res, {
-      statusCode: httpStatus.CREATED,
-      success: true,
-      message: "news successfully created",
-      data: result,
-    });
-  } catch (err) {
-    next(err);
-  }
-};
+  sendResponse(res, {
+    statusCode: httpStatus.CREATED,
+    success: true,
+    message: "news successfully created",
+    data: result,
+  });
+});
+
+const getAllNews = catchAsync(async (req, res, next) => {
+  const result = await NewsServices.getAllNewsFromDB();
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "successfully retrieved all news",
+    data: result,
+  });
+});
+
+const updateNews = catchAsync(async (req, res, next) => {});
 
 export const NewsController = {
   createPost,
+  getAllNews,
 };

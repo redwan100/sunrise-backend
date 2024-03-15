@@ -10,7 +10,7 @@ cloudinary.config({
 });
 
 const sendImageToCloudinary = (name: string, path: string) => {
-  const imageName = name.split(" ").join("");
+  const imageName = name?.split(" ").join("");
   return new Promise((resolve, reject) => {
     cloudinary.uploader.upload(
       path,
