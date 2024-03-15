@@ -20,4 +20,10 @@ router.post(
 
 router.get("/", NewsController.getAllNews);
 
+router.patch(
+  "/:newsId",
+  validRequest(NewsValidations.NewsUpdatedValidationSchema),
+  NewsController.updateNews,
+);
+
 export const NewsRouter = router;

@@ -17,7 +17,20 @@ const getAllNewsFromDB = async () => {
   return result;
 };
 
+const updateNewsIntoDB = async (id: string, payload: Partial<TNews>) => {
+  const news = await News.findById(id);
+  if (!news) {
+    throw new Error("News not found");
+  }
+  const result = await News.findByIdAndUpdate(id, payload, {
+    new: true,
+  });
+
+  return result;
+};
+
 export const NewsServices = {
   createNewsIntoDB,
   getAllNewsFromDB,
+  updateNewsIntoDB,
 };
