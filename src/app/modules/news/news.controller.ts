@@ -38,8 +38,21 @@ const updateNews = catchAsync(async (req, res, next) => {
   });
 });
 
+const deleteNews = catchAsync(async (req, res, next) => {
+  const { id } = req.params;
+  const result = await NewsServices.deleteNewsFromDB(id);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "news deleted successfully",
+    data: result,
+  });
+});
+
 export const NewsController = {
   createPost,
   getAllNews,
   updateNews,
+  deleteNews,
 };
