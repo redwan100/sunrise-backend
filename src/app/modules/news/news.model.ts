@@ -5,6 +5,7 @@ const newsSchema = new Schema<TNews>(
   {
     title: {
       type: String,
+      unique: true,
     },
     description: {
       type: String,

@@ -4,8 +4,8 @@ import { NewsServices } from "./news.service";
 const createPost = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const data = req.body;
-    const path = req?.file?.path;
-    const result = await NewsServices.createNewsIntoDB(data, path);
+    const file = req?.file;
+    const result = await NewsServices.createNewsIntoDB(data, file);
 
     res.status(200).json({
       success: true,

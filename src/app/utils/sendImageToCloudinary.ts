@@ -1,6 +1,7 @@
 import { v2 as cloudinary } from "cloudinary";
 import multer from "multer";
 import config from "../config";
+import fs from "fs";
 
 cloudinary.config({
   cloud_name: config.cloud_name,
@@ -9,15 +10,24 @@ cloudinary.config({
 });
 
 const sendImageToCloudinary = (name: string, path: string) => {
+  const imageName = name.split(" ").join("");
   return new Promise((resolve, reject) => {
     cloudinary.uploader.upload(
       path,
-      { public_id: name },
+      { public_id: imageName },
       function (error, result) {
         if (error) {
           reject(error);
         }
         resolve(result);
+        // Delete local image file
+        fs.unlink(path, function (error) {
+          if (error) {
+            console.error("Error deleting local image file:", error);
+          } else {
+            console.log("Local image file deleted successfully.");
+          }
+        });
       },
     );
   });
