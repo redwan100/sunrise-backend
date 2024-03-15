@@ -1,5 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { NewsServices } from "./news.service";
+import sendResponse from "../../utils/sendResponse";
+import httpStatus from "http-status";
 
 const createPost = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -7,7 +9,8 @@ const createPost = async (req: Request, res: Response, next: NextFunction) => {
     const file = req?.file;
     const result = await NewsServices.createNewsIntoDB(data, file);
 
-    res.status(200).json({
+    sendResponse(res, {
+      statusCode: httpStatus.CREATED,
       success: true,
       message: "news successfully created",
       data: result,
