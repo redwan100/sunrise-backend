@@ -28,4 +28,4 @@ router.patch(
 
 router.delete("/:id", NewsController.deleteNews);
 
-export const NewsRouter = router;
+export const NewsRoute = router;

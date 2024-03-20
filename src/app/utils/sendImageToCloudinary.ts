@@ -1,7 +1,7 @@
 import { v2 as cloudinary } from "cloudinary";
+import fs from "fs";
 import multer from "multer";
 import config from "../config";
-import fs from "fs";
 
 cloudinary.config({
   cloud_name: config.cloud_name,
@@ -9,12 +9,11 @@ cloudinary.config({
   api_secret: config.api_secret,
 });
 
-const sendImageToCloudinary = (name: string, path: string) => {
-  const imageName = name?.split(" ").join("");
+const sendImageToCloudinary = (path: string) => {
   return new Promise((resolve, reject) => {
     cloudinary.uploader.upload(
       path,
-      { public_id: imageName },
+      { public_id: `${Date.now()}` },
       function (error, result) {
         if (error) {
           reject(error);

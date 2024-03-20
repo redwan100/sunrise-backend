@@ -1,0 +1,11 @@
+{
+  "id": "12",
+  "name": {
+    "firstName": "redwan",
+    "lastName": "islam 2.0"
+  },
+  "gender": "male",
+  "email": "redwan2.0@example.com",
+  "contactNumber": "1234567890",
+  "address": "123 Main St, City"
+}
