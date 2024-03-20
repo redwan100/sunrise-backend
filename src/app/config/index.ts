@@ -7,6 +7,8 @@ export default {
   port: process.env.PORT,
   database_url: process.env.DATABASE_URL,
   cloud_name: process.env.CLOUD_NAME,
-  api_key:process.env.API_KEY,
-  api_secret:process.env.API_SECRET
+  api_key: process.env.API_KEY,
+  api_secret: process.env.API_SECRET,
+  default_password: process.env.DEFAULT_PASSWORD,
+  bcrypt_salt_round: process.env.BCRYPT_SALT_ROUND,
 };

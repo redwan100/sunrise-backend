@@ -1,5 +1,7 @@
 import { Schema, model } from "mongoose";
 import { TUser } from "./user.types";
+import bcrypt from "bcrypt";
+import config from "../../config";
 
 const userSchema = new Schema<TUser>(
   {
@@ -17,7 +19,7 @@ const userSchema = new Schema<TUser>(
     },
     role: {
       type: String,
-      enum: ["admin", "user"],
+      enum: ["admin", "super-admin", "user"],
     },
     status: {
       type: String,
@@ -31,6 +33,21 @@ const userSchema = new Schema<TUser>(
   },
   { timestamps: true },
 );
+
+userSchema.pre("save", async function (next) {
+  const user = this;
+  const hashedPassword = await bcrypt.hash(
+    user.password,
+    Number(config.bcrypt_salt_round),
+  );
+  user.password = hashedPassword;
+  next();
+});
+
+userSchema.post("save", function (doc, next) {
+  doc.password = "";
+  next();
+});
 
 const User = model<TUser>("User", userSchema);
 

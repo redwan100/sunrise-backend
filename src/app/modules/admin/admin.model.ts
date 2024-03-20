@@ -9,6 +9,12 @@ const adminSchema = new Schema<TAdmin, AdminModel>(
     id: {
       type: String,
     },
+    user: {
+      type: Schema.Types.ObjectId,
+      required: [true, "user id is required"],
+      unique: true,
+      ref: "User",
+    },
     name: {
       firstName: {
         type: String,
@@ -45,11 +51,6 @@ const adminSchema = new Schema<TAdmin, AdminModel>(
       type: String,
     },
 
-    isActive: {
-      type: String,
-      enum: ["active", "blocked"],
-      default: "active",
-    },
     isDeleted: {
       type: Boolean,
       default: false,

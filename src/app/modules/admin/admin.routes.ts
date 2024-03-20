@@ -1,11 +1,7 @@
-import { NextFunction, Request, Response, Router } from "express";
-import { upload } from "../../utils/sendImageToCloudinary";
-import validRequest from "../../utils/validRequest";
+import { Router } from "express";
 import { adminController } from "./admin.controller";
-import { AdminValidationSchema } from "./admin.validation";
 
 const router = Router();
-
 
 router.get("/", adminController.getAllAdmin);
 router.get("/:id", adminController.getSingleAdmin);

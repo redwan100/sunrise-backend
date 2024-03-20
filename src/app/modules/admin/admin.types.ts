@@ -1,8 +1,9 @@
-import { Model } from "mongoose";
+import { Model, Types } from "mongoose";
 
 export type TAdmin = {
   password?: string;
   id?: string;
+  user: Types.ObjectId;
   name: {
     firstName: string;
     lastName: string;
@@ -13,7 +14,6 @@ export type TAdmin = {
   contactNumber: string;
   address: string;
   profileImage?: string;
-  isActive: "active" | "blocked";
   isDeleted: boolean;
 };
 
