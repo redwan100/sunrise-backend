@@ -1,18 +1,5 @@
-import sendImageToCloudinary from "../../utils/sendImageToCloudinary";
 import Admin from "./admin.model";
 import { TAdmin } from "./admin.types";
-
-const createAdminIntoDB = async (payload: TAdmin, file: any) => {
-  if (await Admin.isUserExists(payload.id)) {
-    throw new Error(`User ${payload.id} already exists`);
-  }
-
-  const { secure_url } = await sendImageToCloudinary(file?.path);
-  payload.profileImage = secure_url;
-  const result = await Admin.create(payload);
-
-  return result;
-};
 
 const getAllAdminFromDB = async () => {
   const result = await Admin.find();
@@ -40,7 +27,6 @@ const deleteAdminFromDB = async (id: string) => {
 };
 
 export const adminService = {
-  createAdminIntoDB,
   getAllAdminFromDB,
   getSingleAdminFromDB,
   updateAdminIntoDB,
