@@ -2,12 +2,12 @@ import Admin from "./admin.model";
 import { TAdmin } from "./admin.types";
 
 const getAllAdminFromDB = async () => {
-  const result = await Admin.find();
+  const result = await Admin.find().populate("user");
   return result;
 };
 
 const getSingleAdminFromDB = async (id: string) => {
-  const result = await Admin.findById(id);
+  const result = await Admin.findById(id).populate("user");
 
   return result;
 };

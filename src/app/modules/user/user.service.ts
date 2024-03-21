@@ -1,9 +1,10 @@
 import config from "../../config";
+import generateAdminId from "../../utils/generateId";
 import sendImageToCloudinary from "../../utils/sendImageToCloudinary";
 import Admin from "../admin/admin.model";
 import { TAdmin } from "../admin/admin.types";
 import User from "./user.model";
-import { TNewUser, TUser } from "./user.types";
+import { TUser } from "./user.types";
 
 const createAdminIntoDB = async (
   password: string,
@@ -16,18 +17,18 @@ const createAdminIntoDB = async (
 
   // create user
   const userData: Partial<TUser> = {};
+  const adminId = await generateAdminId();
 
   userData.password = password || (config.default_password as string);
   userData.role = "admin";
-  userData.id = "2024001";
+  userData.id = adminId;
   const { secure_url } = await sendImageToCloudinary(file?.path);
   adminData.profileImage = secure_url;
 
   // create user
   const newUser = await User.create(userData);
-
   if (Object.keys(adminData).length) {
-    adminData.id = newUser.id;
+    adminData.id = adminId;
     adminData.user = newUser._id;
 
     const newAdmin = await Admin.create(adminData);
