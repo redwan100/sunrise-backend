@@ -1,13 +1,12 @@
-import { Schema, model } from "mongoose";
-import { TUser } from "./user.types";
 import bcrypt from "bcrypt";
+import { Schema, model } from "mongoose";
 import config from "../../config";
+import { TUser } from "./user.types";
 
 const userSchema = new Schema<TUser>(
   {
     id: {
       type: String,
-      required: true,
     },
     password: {
       type: String,
