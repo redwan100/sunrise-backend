@@ -29,6 +29,7 @@ const createAdminIntoDB = async (
 
     userData.role = "admin";
     userData.id = adminId;
+    userData.email = adminData?.email;
 
     if (file) {
       const { secure_url } = await sendImageToCloudinary(file?.path);
@@ -72,13 +73,10 @@ const createPeopleIntoDB = async (
     // * START TRANSACTION
     await session.startTransaction();
 
-    // // * GENERATE CUSTOM ID
-    // const adminId = await generateAdminId();
-
     userData.password = password || (config.default_password as string);
 
     userData.role = "user";
-    // userData.id = adminId;
+    userData.email = peopleData?.email;
 
     if (file) {
       const { secure_url } = await sendImageToCloudinary(file?.path);

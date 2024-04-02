@@ -6,6 +6,7 @@ const peopleSchema = new Schema<TPeople>(
     password: {
       type: String,
     },
+
     id: {
       type: String,
     },
