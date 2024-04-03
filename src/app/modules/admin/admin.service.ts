@@ -20,7 +20,7 @@ const updateAdminIntoDB = async (id: string, payload: Partial<TAdmin>) => {
 const deleteAdminFromDB = async (id: string) => {
   const result = await Admin.findByIdAndUpdate(
     id,
-    { isDeleted: true, isActive: "blocked" },
+    { isDeleted: true },
     { new: true },
   );
   return result;

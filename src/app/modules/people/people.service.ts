@@ -14,6 +14,29 @@ const getAllPeopleFromDB = async (query: Record<string, unknown>) => {
   return result;
 };
 
+const getSinglePeopleFromDB = async (id: string) => {
+  const result = await People.findById(id).populate("user");
+  return result;
+};
+
+const updateSinglePeopleIntoDB = async (
+  id: string,
+  payload: Record<string, unknown>,
+) => {
+  const result = await People.findByIdAndUpdate(id, payload, { new: true });
+  return result;
+};
+
+const deletePeopleIntoDB = async (
+  id: string,
+) => {
+  const result = await People.findByIdAndUpdate(id, {isDeleted:true}, {new:true});
+  return result;
+};
+
 export const PeopleService = {
   getAllPeopleFromDB,
+  getSinglePeopleFromDB,
+  updateSinglePeopleIntoDB,
+  deletePeopleIntoDB,
 };

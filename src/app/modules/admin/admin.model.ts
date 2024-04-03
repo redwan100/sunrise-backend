@@ -65,7 +65,7 @@ const adminSchema = new Schema<TAdmin, AdminModel>(
 );
 
 adminSchema.virtual("fullName").get(function () {
-  return `${this.name.firstName} ${this.name.lastName}`;
+  return `${this?.name?.firstName} ${this?.name?.lastName}`;
 });
 
 adminSchema.statics.isUserExists = async function (id: string) {
