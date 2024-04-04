@@ -41,6 +41,54 @@ const adminValidation = z.object({
   }),
 });
 
+const nameUpdateSchema = z.object({
+  firstName: z
+    .string({
+      invalid_type_error: "first name must be a string",
+    })
+    .optional(),
+  lastName: z
+    .string({
+      invalid_type_error: "last name must be a string",
+    })
+    .optional(),
+});
+
+const adminUpdateValidation = z.object({
+  body: z
+    .object({
+      password: z.string().optional(),
+      admin: z.object({
+        id: z.string().optional(), // Assuming id is always a string
+        name: nameUpdateSchema,
+        gender: z.enum(["male", "female"]).optional(),
+        dateOfBirth: z
+          .string({
+            invalid_type_error: "date must be a string",
+          })
+          .optional(), // You might want to use a more specific type for date
+        email: z
+          .string({
+            invalid_type_error: "email must be a string",
+          })
+          .email(),
+        contactNumber: z
+          .string({
+            invalid_type_error: "contact number must be a string",
+          })
+          .optional(), // You might want to add more validation for phone number format
+        address: z
+          .string({
+            invalid_type_error: "address must be a string",
+          })
+          .optional(),
+        profileImage: z.string().optional(),
+      }),
+    })
+    .optional(),
+});
+
 export const AdminValidationSchema = {
   adminValidation,
+  adminUpdateValidation,
 };
