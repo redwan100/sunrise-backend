@@ -1,3 +1,4 @@
+import bcrypt from "bcrypt";
 import httpStatus from "http-status";
 import config from "../../config";
 import AppError from "../../utils/AppError";
@@ -21,8 +22,6 @@ const userLoginIntoDB = async (payload: {
   if (isDelete) {
     throw new AppError(httpStatus.FORBIDDEN, "user is deleted");
   }
-
-  
 
   const { status } = user;
   if (status === "blocked") {
@@ -85,7 +84,55 @@ const refreshToken = async (token: string) => {
   return accessToken;
 };
 
+const changePassword = async (
+  token: string,
+  payload: {
+    oldPassword: string;
+    newPassword: string;
+  },
+) => {
+  let decodedUser;
+  try {
+    decodedUser = jwtHelpers.verifyToken(
+      token,
+      config.jwt.jwt_refresh as string,
+    );
+  } catch (error) {
+    throw new AppError(httpStatus.UNAUTHORIZED, "unauthorized access");
+  }
+
+  const user = await User.findOne({ email: decodedUser.email });
+
+  if (!user) {
+    throw new AppError(httpStatus.NOT_FOUND, "user not found");
+  }
+
+  const isPasswordCorrect = await User.isPasswordMatch(
+    payload.oldPassword,
+    user?.password as string,
+  );
+  if (!isPasswordCorrect) {
+    throw new AppError(httpStatus.FORBIDDEN, "password is incorrect");
+  }
+
+  const newHashedPassword = await bcrypt.hash(
+    payload.newPassword,
+    Number(config.bcrypt_salt_round),
+  );
+
+  await User.updateOne(
+    { email: user.email },
+    { password: newHashedPassword },
+    { new: true },
+  );
+
+  user.password = "";
+
+  return user;
+};
+
 export const AuthService = {
   userLoginIntoDB,
   refreshToken,
+  changePassword,
 };
