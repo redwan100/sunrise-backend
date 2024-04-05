@@ -18,4 +18,8 @@ export default {
     jwt_refresh: process.env.JWT_REFRESH_SECRET,
     refresh_expires_in: process.env.REFRESH_EXPIRES_IN,
   },
+  client_side_url: process.env.CLIENT_SIDE_URL,
+  send_email: process.env.SEND_EMAIL,
+  send_email_pass: process.env.SEND_EMAIL_PASS,
+  app_pass: process.env.APP_PASS,
 };

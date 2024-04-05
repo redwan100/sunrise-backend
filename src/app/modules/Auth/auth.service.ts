@@ -3,6 +3,7 @@ import httpStatus from "http-status";
 import config from "../../config";
 import AppError from "../../utils/AppError";
 import { jwtHelpers } from "../../utils/jwtHelpers";
+import sendEmailToResetPassLink from "../../utils/sendEmailToResetPassLink";
 import User from "../user/user.model";
 
 const userLoginIntoDB = async (payload: {
@@ -85,54 +86,87 @@ const refreshToken = async (token: string) => {
 };
 
 const changePassword = async (
-  token: string,
+  decodedUser: any,
   payload: {
     oldPassword: string;
     newPassword: string;
   },
 ) => {
-  let decodedUser;
-  try {
-    decodedUser = jwtHelpers.verifyToken(
-      token,
-      config.jwt.jwt_refresh as string,
-    );
-  } catch (error) {
-    throw new AppError(httpStatus.UNAUTHORIZED, "unauthorized access");
-  }
-
   const user = await User.findOne({ email: decodedUser.email });
+  const status = user?.status;
+  const isDeleted = user?.isDelete;
 
   if (!user) {
     throw new AppError(httpStatus.NOT_FOUND, "user not found");
+  }
+
+  if (status === "blocked") {
+    throw new AppError(httpStatus.FORBIDDEN, "user is blocked");
+  }
+  if (isDeleted) {
+    throw new AppError(httpStatus.FORBIDDEN, "user is deleted");
   }
 
   const isPasswordCorrect = await User.isPasswordMatch(
     payload.oldPassword,
     user?.password as string,
   );
+
   if (!isPasswordCorrect) {
-    throw new AppError(httpStatus.FORBIDDEN, "password is incorrect");
+    throw new AppError(httpStatus.FORBIDDEN, "incorrect password");
   }
 
-  const newHashedPassword = await bcrypt.hash(
+  const newHashedPassword: string = await bcrypt.hash(
     payload.newPassword,
     Number(config.bcrypt_salt_round),
   );
 
-  await User.updateOne(
+  const updatedUser = await User.updateOne(
     { email: user.email },
-    { password: newHashedPassword },
+    { password: newHashedPassword, needPasswordChange: false },
     { new: true },
   );
 
   user.password = "";
 
-  return user;
+  return updatedUser;
+};
+
+const forgetPassword = async (payload: { email: string }) => {
+  const user = await User.findOne({ email: payload.email });
+  const status = user?.status;
+  const isDeleted = user?.isDelete;
+
+  if (!user) {
+    throw new AppError(httpStatus.NOT_FOUND, "user not found");
+  }
+
+  if (status === "blocked") {
+    throw new AppError(httpStatus.FORBIDDEN, "user is blocked");
+  }
+  if (isDeleted) {
+    throw new AppError(httpStatus.FORBIDDEN, "user is deleted");
+  }
+
+  const jwtPayload = {
+    email: user.email,
+    role: user.role,
+  };
+
+  const accessToken = jwtHelpers.generateToken(
+    jwtPayload,
+    config.jwt.jwt_secret as string,
+    "10m",
+  );
+
+  const generateUILink = `${config.client_side_url}?id=${user._id}&token=${accessToken}`;
+
+  await sendEmailToResetPassLink(generateUILink, user?.email);
 };
 
 export const AuthService = {
   userLoginIntoDB,
   refreshToken,
   changePassword,
+  forgetPassword,
 };
