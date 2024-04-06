@@ -6,6 +6,7 @@ import sendResponse from "../../utils/sendResponse";
 import { AuthService } from "./auth.service";
 
 const userLogin = catchAsync(async (req: Request, res: Response) => {
+  
   const { accessToken, refreshToken } = await AuthService.userLoginIntoDB(
     req.body,
   );
@@ -56,10 +57,21 @@ const forgetPassword = catchAsync(async (req: Request, res: Response) => {
     data: result,
   });
 });
+const resetPassword = catchAsync(async (req: Request, res: Response) => {
+  const token = req?.headers?.authorization
+  const result = await AuthService.resetPassword(token,req.body);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: " successfully reset password ",
+    data: result,
+  });
+});
 
 export const AuthController = {
   userLogin,
   refreshToken,
   changePassword,
   forgetPassword,
+  resetPassword,
 };
