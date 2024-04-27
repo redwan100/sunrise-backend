@@ -1,9 +1,10 @@
+import { Request, Response } from "express";
 import httpStatus from "http-status";
 import catchAsync from "../../utils/catchAsync";
 import sendResponse from "../../utils/sendResponse";
 import { NewsServices } from "./news.service";
 
-const createPost = catchAsync(async (req, res, next) => {
+const createPost = catchAsync(async (req: Request, res: Response) => {
   const data = req.body;
   const result = await NewsServices.createNewsIntoDB(data, req?.file);
 
@@ -15,7 +16,7 @@ const createPost = catchAsync(async (req, res, next) => {
   });
 });
 
-const getAllNews = catchAsync(async (req, res, next) => {
+const getAllNews = catchAsync(async (req: Request, res: Response) => {
   const result = await NewsServices.getAllNewsFromDB();
 
   sendResponse(res, {
@@ -26,7 +27,7 @@ const getAllNews = catchAsync(async (req, res, next) => {
   });
 });
 
-const updateNews = catchAsync(async (req, res, next) => {
+const updateNews = catchAsync(async (req: Request, res: Response) => {
   const { newsId } = req.params;
   const result = await NewsServices.updateNewsIntoDB(newsId, req.body);
 
@@ -38,7 +39,7 @@ const updateNews = catchAsync(async (req, res, next) => {
   });
 });
 
-const deleteNews = catchAsync(async (req, res, next) => {
+const deleteNews = catchAsync(async (req: Request, res: Response) => {
   const { id } = req.params;
   const result = await NewsServices.deleteNewsFromDB(id);
 
