@@ -11,8 +11,8 @@ router.post(
 
   upload.single("image"),
   (req: Request, res: Response, next: NextFunction) => {
-    console.log(req.body);
     req.body = JSON.parse(req.body.data);
+
     next();
   },
   validRequest(NewsValidations.NewsValidationSchema),

@@ -6,6 +6,7 @@ import { NewsServices } from "./news.service";
 
 const createPost = catchAsync(async (req: Request, res: Response) => {
   const data = req.body;
+  // console.log({data})
   const result = await NewsServices.createNewsIntoDB(data, req?.file);
 
   sendResponse(res, {
