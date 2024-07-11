@@ -105,6 +105,13 @@
   dependencies:
     sparse-bitfield "^3.0.3"
 
+"@mongodb-js/saslprep@^1.1.5":
+  version "1.1.7"
+  resolved "https://registry.yarnpkg.com/@mongodb-js/saslprep/-/saslprep-1.1.7.tgz#d1700facfd6916c50c2c88fd6d48d363a56c702f"
+  integrity sha512-dCHW/oEX0KJ4NjDULBo3JiOaK5+6axtpBbS+ao2ZInoAL9/YRQLhXzSNAFz7hP4nzLkIqsfYAK/PDE3+XHny0Q==
+  dependencies:
+    sparse-bitfield "^3.0.3"
+
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
   resolved "https://registry.yarnpkg.com/@nodelib/fs.scandir/-/fs.scandir-2.1.5.tgz#7619c2eb21b25483f6d167548b4cfd5a7488c3d5"
@@ -574,6 +581,11 @@ bson@^6.2.0:
   version "6.4.0"
   resolved "https://registry.yarnpkg.com/bson/-/bson-6.4.0.tgz#99c2e37b515e6766ce8b5929e01fa79de5767d50"
   integrity sha512-6/gSSEdbkuFlSb+ufj5jUSU4+wo8xQOwm2bDSqwmxiPE17JTpsP63eAwoN8iF8Oy4gJYj+PAL3zdRCTdaw5Y1g==
+
+bson@^6.7.0:
+  version "6.8.0"
+  resolved "https://registry.yarnpkg.com/bson/-/bson-6.8.0.tgz#5063c41ba2437c2b8ff851b50d9e36cb7aaa7525"
+  integrity sha512-iOJg8pr7wq2tg/zSlCCHMi3hMm5JTOxLTagf3zxhcenHsFp+c6uOs6K7W5UE7A4QIJGtqh/ZovFNMP4mOPJynQ==
 
 buffer-equal-constant-time@1.0.1:
   version "1.0.1"
@@ -1614,6 +1626,15 @@ mongodb@6.3.0:
   dependencies:
     "@mongodb-js/saslprep" "^1.1.0"
     bson "^6.2.0"
+    mongodb-connection-string-url "^3.0.0"
+
+mongodb@^6.8.0:
+  version "6.8.0"
+  resolved "https://registry.yarnpkg.com/mongodb/-/mongodb-6.8.0.tgz#680450f113cdea6d2d9f7121fe57cd29111fd2ce"
+  integrity sha512-HGQ9NWDle5WvwMnrvUxsFYPd3JEbqD3RgABHBQRuoCEND0qzhsd0iH5ypHsf1eJ+sXmvmyKpP+FLOKY8Il7jMw==
+  dependencies:
+    "@mongodb-js/saslprep" "^1.1.5"
+    bson "^6.7.0"
     mongodb-connection-string-url "^3.0.0"
 
 mongoose@^8.2.1:
