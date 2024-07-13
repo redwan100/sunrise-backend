@@ -5,6 +5,7 @@ import { HomeSlider } from "../modules/homeSlider/home.slider.routes";
 import { NewsRoute } from "../modules/news/news.route";
 import { PeopleRoutes } from "../modules/people/people.routes";
 import { ProgramRoutes } from "../modules/program/program.routes";
+import { RecentEvent } from "../modules/recentEvent/recentEvent.routes";
 import { UserRoute } from "../modules/user/user.routes";
 
 const router = express.Router();
@@ -40,7 +41,7 @@ const moduleRoutes = [
   },
   {
     path: "/recent-event",
-    route: ProgramRoutes,
+    route: RecentEvent,
   },
 ];
 

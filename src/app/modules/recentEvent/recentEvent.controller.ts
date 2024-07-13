@@ -36,7 +36,7 @@ const deleteRecentEvent = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-export const HomeSliderController = {
+export const RecentController = {
   createRecentEvent,
   getAllRecentEvent,
   deleteRecentEvent,
