@@ -12,4 +12,7 @@ router.post(
   HomeSliderController.createSlider,
 );
 
+router.get("/", HomeSliderController.getAllSlider);
+router.delete("/:id", HomeSliderController.deleteSlider);
+
 export const HomeSlider = router;

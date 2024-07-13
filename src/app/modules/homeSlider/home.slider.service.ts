@@ -14,6 +14,17 @@ const createSlider = async (files: any) => {
   return urls;
 };
 
+const getALLSlider = async () => {
+  const result = await HomeSlider.find();
+  return result;
+};
+
+const deleteSlider = async (id: string) => {
+  return await HomeSlider.findByIdAndDelete(id);
+};
+
 export const HomeSliderService = {
   createSlider,
+  getALLSlider,
+  deleteSlider,
 };
