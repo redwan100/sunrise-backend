@@ -38,6 +38,10 @@ const moduleRoutes = [
     path: "/program",
     route: ProgramRoutes,
   },
+  {
+    path: "/recent-event",
+    route: ProgramRoutes,
+  },
 ];
 
 moduleRoutes.forEach((route) => router.use(route.path, route.route));
