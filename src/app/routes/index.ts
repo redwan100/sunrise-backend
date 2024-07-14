@@ -3,6 +3,7 @@ import { AuthRoutes } from "../modules/Auth/auth.routes";
 import { AdminRoute } from "../modules/admin/admin.routes";
 import { HelpPoorPeople } from "../modules/helpPoorPeople/helpPoorPeople.routes";
 import { HomeSlider } from "../modules/homeSlider/home.slider.routes";
+import { MomentOfSunriseRoute } from "../modules/momentOfSunrise/momentOfSunrise.route";
 import { NewsRoute } from "../modules/news/news.route";
 import { PeopleRoutes } from "../modules/people/people.routes";
 import { ProgramRoutes } from "../modules/program/program.routes";
@@ -47,6 +48,10 @@ const moduleRoutes = [
   {
     path: "/help-poor-people",
     route: HelpPoorPeople,
+  },
+  {
+    path: "/moment",
+    route: MomentOfSunriseRoute,
   },
 ];
 
