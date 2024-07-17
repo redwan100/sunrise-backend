@@ -27,6 +27,17 @@ const getAllNews = catchAsync(async (req: Request, res: Response) => {
     data: result,
   });
 });
+const getSingleNews = catchAsync(async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const result = await NewsServices.getSingleNewsFromDB(id);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "successfully retrieved news",
+    data: result,
+  });
+});
 
 const updateNews = catchAsync(async (req: Request, res: Response) => {
   const { newsId } = req.params;
@@ -55,6 +66,7 @@ const deleteNews = catchAsync(async (req: Request, res: Response) => {
 export const NewsController = {
   createPost,
   getAllNews,
+  getSingleNews,
   updateNews,
   deleteNews,
 };

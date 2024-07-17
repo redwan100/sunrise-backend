@@ -21,6 +21,11 @@ const getAllMomentOfSunriseFromDB = async () => {
   return result;
 };
 
+const getSingleMomentOfSunriseFromDB = async (id: string) => {
+  const result = await MomentOfSunrise.findById(id);
+  return result;
+};
+
 const updateMomentOfSunriseIntoDB = async (
   id: string,
   payload: Partial<TMomentOfSunrise>,
@@ -49,6 +54,7 @@ const deleteMomentOfSunriseFromDB = async (id: string) => {
 export const MomentOfSunriseServices = {
   createMomentOfSunriseIntoDB,
   getAllMomentOfSunriseFromDB,
+  getSingleMomentOfSunriseFromDB,
   updateMomentOfSunriseIntoDB,
   deleteMomentOfSunriseFromDB,
 };

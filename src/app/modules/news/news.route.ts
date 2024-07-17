@@ -20,6 +20,7 @@ router.post(
 );
 
 router.get("/", NewsController.getAllNews);
+router.get("/:id", NewsController.getSingleNews);
 
 router.patch(
   "/:newsId",

@@ -18,6 +18,11 @@ const getAllNewsFromDB = async () => {
   return result;
 };
 
+const getSingleNewsFromDB = async (id: string) => {
+  const result = await News.findById(id);
+  return result;
+};
+
 const updateNewsIntoDB = async (id: string, payload: Partial<TNews>) => {
   const news = await News.findById(id);
   if (!news) {
@@ -43,6 +48,7 @@ const deleteNewsFromDB = async (id: string) => {
 export const NewsServices = {
   createNewsIntoDB,
   getAllNewsFromDB,
+  getSingleNewsFromDB,
   updateNewsIntoDB,
   deleteNewsFromDB,
 };

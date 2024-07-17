@@ -34,6 +34,20 @@ const getAllMomentOfSunrise = catchAsync(
     });
   },
 );
+const getSingleMomentOfSunrise = catchAsync(
+  async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const result =
+      await MomentOfSunriseServices.getSingleMomentOfSunriseFromDB(id);
+
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: "successfully retrieved moment",
+      data: result,
+    });
+  },
+);
 
 const updateMomentOfSunrise = catchAsync(
   async (req: Request, res: Response) => {
@@ -69,6 +83,7 @@ const deleteMomentOfSunrise = catchAsync(
 
 export const MomentOfSunriseController = {
   getAllMomentOfSunrise,
+  getSingleMomentOfSunrise,
   createMomentOfSunrise,
   updateMomentOfSunrise,
   deleteMomentOfSunrise,

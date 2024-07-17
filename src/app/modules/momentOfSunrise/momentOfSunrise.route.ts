@@ -21,6 +21,7 @@ router.post(
 );
 
 router.get("/", MomentOfSunriseController.getAllMomentOfSunrise);
+router.get("/:id", MomentOfSunriseController.getSingleMomentOfSunrise);
 
 router.patch(
   "/:momentId",
