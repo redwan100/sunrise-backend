@@ -12,16 +12,18 @@ const auth = (...requiredRole: string[]) => {
     if (!token) {
       throw new AppError(httpStatus.UNAUTHORIZED, "unauthorized access");
     }
- 
-    const decoded = jwt.verify(
-      token,
-      config.jwt.jwt_secret as string,
-    ) as JwtPayload;
-    const { role, email } = decoded;
 
-    if (!decoded) {
-      throw new AppError(httpStatus.UNAUTHORIZED, "unauthorized access");
+    let decoded;
+    try {
+      decoded = jwt.verify(
+        token,
+        config.jwt.jwt_secret as string,
+      ) as JwtPayload;
+    } catch (error) {
+      throw new AppError(httpStatus.UNAUTHORIZED, "Unauthorized access");
     }
+
+    const { role, email } = decoded;
 
     const isUserExists = await User.isUserExists(email);
 
